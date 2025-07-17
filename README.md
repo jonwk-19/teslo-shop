@@ -4,6 +4,12 @@
 
 # Teslo Api
 
-```
-  docker-compose up -d
-```
+1. Clonar proyecto
+2. ```npm i```
+3. Clonar el arcivo ```.env.template``` y renombrarlo a ```.env```
+4. Cambiar las varibales de entorno
+5. Lecantar la DB
+  ```
+    docker-compose up -d
+  ```
+6. Levantar con ```npm run start:dev```
