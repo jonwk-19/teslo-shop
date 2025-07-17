@@ -14,7 +14,7 @@ import { ProductsModule } from './products/products.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       synchronize: true, // Cuando se hace un cambio en las entidades, se actualiza la base de datos automáticamente
-      logging: true, // Muestra los logs de las consultas SQL
+      // logging: true, // Muestra los logs de las consultas SQL
       autoLoadEntities: true, // Carga automáticamente las entidades definidas en el proyecto
     }),
     ProductsModule

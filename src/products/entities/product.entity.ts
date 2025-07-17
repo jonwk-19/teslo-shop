@@ -6,10 +6,14 @@ export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('text', { unique: true })
+  @Column('text', {
+    unique: true
+  })
   title: string;
 
-  @Column('numeric', {default: 0}) //Indica que es una calumna el tipo y luego configuraciones a ese campo
+  @Column('float', {
+    default: 0
+  }) //Indica que es una calumna el tipo y luego configuraciones a ese campo
   price: number;
 
   // otra forma de definir es:
