@@ -20,6 +20,7 @@ export class ProductsService {
   async create(createProductDto: CreateProductDto) {
 
     try {
+
       const product = this.productRespository.create(createProductDto);
       await this.productRespository.save(product)
       return product;
