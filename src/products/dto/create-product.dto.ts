@@ -32,4 +32,8 @@ export class CreateProductDto {
   @IsString({each: true})
   // @IsArray() // no me acurdo si iba o no pero lo quite y jalo
   gender: string
+
+  @IsArray()
+  @IsString({each: true})
+  tags: string[];
 }
