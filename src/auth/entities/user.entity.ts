@@ -11,13 +11,17 @@ export class User {
   })
   email: string;
 
-  @Column('text')
+  @Column('text', {
+    select: false
+  })
   password: string;
 
   @Column('text')
-  fullname: string;
+  fullName: string;
 
-  @Column('bool')
+  @Column('bool', {
+    default: true
+  })
   isActive: boolean;
 
   @Column('text', {
