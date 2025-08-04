@@ -16,7 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy){
 
     configService: ConfigService
   ){
-    //? No deberiamos de hacer esto pero como tenermos que inyectar el repositorio y estamos
+    //? No deberiamos de hacer esto (no quiere decir que sea algo malo, solo que normalmente no se hace)
+    //? pero como tenermos que inyectar el repositorio y estamos
     //? Poniendo el contructor entonces debos hacer el super
     super({
       secretOrKey: configService.get<string>('JWT_SECRET')!.toString(),
@@ -25,9 +26,9 @@ export class JwtStrategy extends PassportStrategy(Strategy){
   }
 
   async validate( payload: JwtPayload): Promise<User> {
-    const { email } = payload;
+    const { id } = payload;
 
-    const user = await this.userRepository.findOneBy({email})
+    const user = await this.userRepository.findOneBy({id})
 
     if(!user)
       throw new UnauthorizedException('Token not valid')
