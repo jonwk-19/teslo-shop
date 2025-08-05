@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 interface SeedProduct {
     description: string;
     images: string[];
@@ -34,61 +35,61 @@ export const initialData: SeedData = {
   {
     email: 'test1@google.com',
     fullName: "Test One",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['admin']
   },
   {
     email: 'test2@google.com',
     fullName: "Test Two",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['user']
   },
   {
     email: 'test3@google.com',
     fullName: "Test Three",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['super-user']
   },
   {
     email: 'test4@google.com',
     fullName: "Test Four",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['admin', 'user']
   },
   {
     email: 'test5@google.com',
     fullName: "Test Five",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['user', 'super-user']
   },
   {
     email: 'test6@google.com',
     fullName: "Test Six",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['admin', 'super-user']
   },
   {
     email: 'test7@google.com',
     fullName: "Test Seven",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['user']
   },
   {
     email: 'test8@google.com',
     fullName: "Test Eight",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['admin']
   },
   {
     email: 'test9@google.com',
     fullName: "Test Nine",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['super-user']
   },
   {
     email: 'test10@google.com',
     fullName: "Test Ten",
-    password: "Abc123",
+    password: bcrypt.hashSync("Abc123", 10),
     roles: ['admin', 'user', 'super-user']
   }
 ],
