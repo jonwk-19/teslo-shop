@@ -5,6 +5,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser, RawHeaders } from './decorators';
 import { User } from './entities/user.entity';
 import { UserRoleGuard } from './guards/user-role/user-role.guard';
+import { RoleProtected } from './decorators/role-protected.decorator';
+import { ValidRoles } from './interfaces';
 
 @Controller('auth')
 export class AuthController {
@@ -51,14 +53,31 @@ export class AuthController {
     }
   }
 
+
+  // @SetMetadata('roles', ['admin', 'super-user'])
+
   @Get('private3')
-  @SetMetadata('roles', ['admin', 'super-user'])
-  @UseGuards(AuthGuard(), UserRoleGuard)
+  @RoleProtected(ValidRoles.superUser)
+  @UseGuards(AuthGuard(), UserRoleGuard) //? Sirve para enviar la request y luego nos permite acceder a ella
   privateRoute3(
     @GetUser() user: User,
   ){
     return{
       ok: true,
+      message: 'Hi im private 3',
+      user
+    }
+  }
+
+  @Get('private4')
+  @RoleProtected(ValidRoles.superUser)
+  @UseGuards(AuthGuard(), UserRoleGuard) //? Sirve para enviar la request y luego nos permite acceder a ella
+  privateRoute4(
+    @GetUser() user: User,
+  ){
+    return{
+      ok: true,
+      message: 'Hi im private 4',
       user
     }
   }
