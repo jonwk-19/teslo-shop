@@ -3,8 +3,10 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { Auth } from 'src/auth/decorators';
 
 @Controller('products')
+@Auth() //?Cualquiera que quiera usar estas rutas debe estar autenticado es como aplicarlo global
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
