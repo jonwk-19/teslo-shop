@@ -2,7 +2,7 @@ import { Controller, Post, Body, Get, UseGuards, SetMetadata } from '@nestjs/com
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginUserDto  } from './dto';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser, RawHeaders } from './decorators';
+import { Auth, GetUser, RawHeaders } from './decorators';
 import { User } from './entities/user.entity';
 import { UserRoleGuard } from './guards/user-role/user-role.guard';
 import { RoleProtected } from './decorators/role-protected.decorator';
@@ -70,8 +70,7 @@ export class AuthController {
   }
 
   @Get('private4')
-  @RoleProtected(ValidRoles.superUser)
-  @UseGuards(AuthGuard(), UserRoleGuard) //? Sirve para enviar la request y luego nos permite acceder a ella
+  @Auth(ValidRoles.superUser)
   privateRoute4(
     @GetUser() user: User,
   ){
