@@ -14,7 +14,7 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
     private readonly jwtService: JwtService
   ) {}
 
-  handleConnection(client: Socket) {
+  async handleConnection(client: Socket) {
     // console.log('Client connected: ', client.id)
 
     const token = client.handshake.headers.authentication as string;
@@ -22,14 +22,15 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
 
     try {
       payload = this.jwtService.verify(token)
+      await this.messagesWsService.registerClient(client, payload.id)
     } catch (error) {
       console.log(error)
       client.disconnect()
       return;
     }
 
-    console.log({payload})
-    this.messagesWsService.registerClient(client)
+    // console.log({payload})
+
     console.log({connectados: this.messagesWsService.getConnectedClients()})
 
     this.wss.emit('clients-updated', this.messagesWsService.getConnectedClients()) //? para decirle algo al cliente
@@ -64,7 +65,7 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
     // this.wss.to(room)
 
     this.wss.emit('message-from-server', {
-      fullName: 'Soy yo',
+      fullName: this.messagesWsService.getUserFullName(client.id),
       message: payload.message || 'no-message!!'
     })
   }
