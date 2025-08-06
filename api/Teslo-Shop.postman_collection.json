@@ -24,10 +24,20 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ0NzdhMTY2LTIxZDMtNGVkMy04NGQ2LWRhNjcwZDEyZmRmZiIsImlhdCI6MTc1NDQyOTM5MCwiZXhwIjoxNzU0NDM2NTkwfQ.KBKn882x47wPZ-oZa8HVtDmEiIgTJhpk9Tbx-NXbOK8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/products?limit=2&offset=0",
+					"raw": "{{base_url}}/products",
 					"host": [
 						"{{base_url}}"
 					],
@@ -37,11 +47,13 @@
 					"query": [
 						{
 							"key": "limit",
-							"value": "2"
+							"value": "2",
+							"disabled": true
 						},
 						{
 							"key": "offset",
-							"value": "0"
+							"value": "0",
+							"disabled": true
 						}
 					]
 				},
@@ -69,13 +81,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/products/My_shirt12",
+					"raw": "{{base_url}}/products/79a1ca23-c446-4382-8a1d-f9429ea9db67",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"products",
-						"My_shirt12"
+						"79a1ca23-c446-4382-8a1d-f9429ea9db67"
 					]
 				},
 				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -100,11 +112,21 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ0NzdhMTY2LTIxZDMtNGVkMy04NGQ2LWRhNjcwZDEyZmRmZiIsImlhdCI6MTc1NDQyOTM5MCwiZXhwIjoxNzU0NDM2NTkwfQ.KBKn882x47wPZ-oZa8HVtDmEiIgTJhpk9Tbx-NXbOK8",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"My shirt1234567\",\n    \"sizes\": [\"SM\", \"M\", \"L\"],\n    \"gender\": \"men\",\n    \"price\": 151.99,\n    \"tags\": [\"Hi\", \"I'm\", \"a\", \"tag\"]\n    // \"slug\": \"my_shirt\"\n}",
+					"raw": "{\n\t\"title\": \"My shirt123456789\",\n    \"sizes\": [\"SM\", \"M\", \"L\"],\n    \"gender\": \"men\",\n    \"price\": 151.99,\n    \"tags\": [\"Hi\", \"I'm\", \"a\", \"tag\"],\n    \"images\": [\"Hello\", \"Hello\"]\n    // \"slug\": \"my_shirt\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -118,6 +140,50 @@
 					],
 					"path": [
 						"products"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "uploadFile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/Lenovo E15/Pictures/Screenshots/Screenshot 2025-01-09 213816.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/files/product",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"files",
+						"product"
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -146,7 +212,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"My shirt\",\n\t\"price\": 250,\n    \"slug\": \"my_shirt slug\",\n    \"tags\": [\"Hi\", \"I'm\", \"a\", \"tag\"]\n}",
+					"raw": "{\n    \"title\": \"My shirt\",\n\t\"price\": 250,\n    \"slug\": \"my_shirt slug\",\n    \"tags\": [\"Hi\", \"I'm\", \"a\", \"tag\"],\n    \"images\":[\n        \"https://imagel.jpg\",\n        \"https://image2.jpg\",\n        \"https://image3.jpg\"\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -168,7 +234,7 @@
 			"response": []
 		},
 		{
-			"name": "Delete data",
+			"name": "deleteProduct",
 			"event": [
 				{
 					"listen": "test",
@@ -197,16 +263,188 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/products/2287468d-eccd-46c4-9f9c-077d14e69020",
+					"raw": "{{base_url}}/products/753436cf-36a7-40f0-964e-b31bcd37719e",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
 						"products",
-						"2287468d-eccd-46c4-9f9c-077d14e69020"
+						"753436cf-36a7-40f0-964e-b31bcd37719e"
 					]
 				},
 				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "seed",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ0NzdhMTY2LTIxZDMtNGVkMy04NGQ2LWRhNjcwZDEyZmRmZiIsImlhdCI6MTc1NDQyOTM5MCwiZXhwIjoxNzU0NDM2NTkwfQ.KBKn882x47wPZ-oZa8HVtDmEiIgTJhpk9Tbx-NXbOK8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/seed",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"seed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductImage",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/files/product/1473809-00-A_1_2000.jpg",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"files",
+						"product",
+						"1473809-00-A_1_2000.jpg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"juan3@google.com\",\r\n    \"password\":\"Abc123\",\r\n    \"fullName\":\"Fernando Herrera\"    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"test10@google.com\",\r\n    \"password\":\"Abc123\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testAuth",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQ0NzdhMTY2LTIxZDMtNGVkMy04NGQ2LWRhNjcwZDEyZmRmZiIsImlhdCI6MTc1NDQyOTM5MCwiZXhwIjoxNzU0NDM2NTkwfQ.KBKn882x47wPZ-oZa8HVtDmEiIgTJhpk9Tbx-NXbOK8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"juan3@google.com\",\r\n    \"password\":\"Abc123\",\r\n    \"fullName\":\"Fernando Herrera\"    \r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/private4",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"private4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check-status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVhMzhlMjg0LTFjMWQtNGVkYi1hNmU3LTMxZmVkYzVmODdmNyIsImlhdCI6MTc1NDQzODg3MSwiZXhwIjoxNzU0NDQ2MDcxfQ.4UVXzj_FaF6MSqrpzOgQ_JQLRXvk3LCj8ANeACZQNxI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/auth/check-status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"check-status"
+					]
+				}
 			},
 			"response": []
 		}
