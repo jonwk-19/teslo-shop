@@ -1,6 +1,7 @@
-import { OnGatewayConnection, OnGatewayDisconnect, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { MessagesWsService } from './messages-ws.service';
 import { Server, Socket } from 'socket.io';
+import { NewMessageDto } from './dtos/new-message.dto.';
 
 @WebSocketGateway({cors: true})
 export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconnect{
@@ -22,6 +23,32 @@ export class MessagesWsGateway implements OnGatewayConnection, OnGatewayDisconne
     console.log({connectados: this.messagesWsService.getConnectedClients()})
 
     this.wss.emit('clients-updated', this.messagesWsService.getConnectedClients()) //? para decirle algo al cliente
+  }
+
+  @SubscribeMessage('message-from-client')
+  handleMessageFromClient(client: Socket, payload: NewMessageDto){
+
+    //! Solo emite al cliente que envio
+    //message-from-server
+    // client.emit('message-from-server', {
+    //   fullName: 'Soy yo',
+    //   message: payload.message || 'no-message!!'
+    // })
+
+    //! Emitir a todos menos al cliente inicial
+    // client.broadcast.emit('message-from-server', {
+    //   fullName: 'Soy yo',
+    //   message: payload.message || 'no-message!!'
+    // })
+
+    //? Usar clientes
+    // client.join(rooms)
+    // this.wss.to(room)
+
+    this.wss.emit('message-from-server', {
+      fullName: 'Soy yo',
+      message: payload.message || 'no-message!!'
+    })
   }
 
 }
